@@ -4,7 +4,6 @@ import os
 from ogeth.utils import is_connected
 from ogeth.constants import CONS_DICT, PROD_DICT
 
-
 CUR_DIR = os.path.dirname(os.path.realpath(__file__))
 """
 Read in Social Accounting Matrix (SAM) file
