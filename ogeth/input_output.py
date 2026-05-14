@@ -21,8 +21,17 @@ def read_SAM():
         try:
             SAM = pd.read_csv(SAM_path, index_col=1, thousands=",")
             print("Successfully read SAM from Github repository.")
-            # replace NaN with 0
-            SAM.fillna(0, inplace=True)
+
+            SAM.index = SAM.index.astype(str)
+            SAM.columns = SAM.columns.astype(str)
+
+            label_col = SAM.columns[0]
+            value_cols = SAM.columns.drop(label_col)
+
+            SAM[value_cols] = SAM[value_cols].apply(
+                lambda s: pd.to_numeric(s, errors="coerce")
+            )
+            SAM[value_cols] = SAM[value_cols].fillna(0)
         except Exception as e:
             print(f"Failed to read from the GitHub repository: {e}")
             SAM = None
