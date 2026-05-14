@@ -4,8 +4,10 @@ import os
 from ogeth.utils import is_connected
 from ogeth.constants import CONS_DICT, PROD_DICT
 
+
 def norm(x):
     return str(x).strip().casefold()
+
 
 CUR_DIR = os.path.dirname(os.path.realpath(__file__))
 """
@@ -35,11 +37,15 @@ def read_SAM():
             value_cols = SAM.columns.drop(label_col)
 
             # Convert only SAM value columns to numeric
-            SAM[value_cols] = SAM[value_cols].apply(
-                lambda s: pd.to_numeric(s, errors="coerce")
-            ).fillna(0)
+            SAM[value_cols] = (
+                SAM[value_cols]
+                .apply(lambda s: pd.to_numeric(s, errors="coerce"))
+                .fillna(0)
+            )
 
-            print(f"{SAM.shape[0]} rows and {SAM.shape[1]} columns in the SAM.")
+            print(
+                f"{SAM.shape[0]} rows and {SAM.shape[1]} columns in the SAM."
+            )
         except Exception as e:
             print(f"Failed to read from the GitHub repository: {e}")
             SAM = None
